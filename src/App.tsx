@@ -1,18 +1,19 @@
-  import React, { useState } from 'react'
+  import React, { useState } from 'react';
 import axios from 'axios';
 
 import Search from './components/Search';
 
 function App() {
-  const [state, setState] = useState({
+  const a = {
     s: '',
     results: [],
     selected: {}
-  });
+  }
+  const [state, setState] = useState<typeof a>(a);
 
   const api = 'http://www.omdbapi.com/?apikey=db8d4a6';
 
-  const search = (e) => {
+  const search = (e: React.ReactHTMLElement<HTMLInputElement>) => {
     if(e.key === 'Enter') {
       axios(api + '&s=' + state.s).then(({ data }) => {
         let result = data.Search;
@@ -24,7 +25,7 @@ function App() {
     }
   }
 
-  const handleInput = (e) => {
+  const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     let s = e.target.value;
 
     setState(prevState => {
@@ -40,9 +41,8 @@ function App() {
        <h1>Movie Database</h1>
      </header>
      <main>
-      <Search search={search}/>
+      <Search handleInput={handleInput} search={search} />
      </main>
-     <Search handleInput={handleInput}/>
     </div>
   );
 }
